@@ -57,6 +57,23 @@ router.delete('/delete/:id', validateJWT, async (req, res) => {
         }
     })
 
+//  ! GET CARD BY ID
+
+router.get('/:id', async (req, res) => {
+    const cardId = req.params.id;
+    try {
+        const card = await CardModel.findAll({
+            where: {
+            id: cardId,
+            completed: false
+        }
+        });
+        res.status(200).json(card);
+    } catch (err) {
+        res.status(500).json({error: err})
+    }
+})
+
 
 // ! UPDATE A CARD
 

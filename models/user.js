@@ -20,6 +20,12 @@ const User = db.define('user', {
         type: DataTypes.STRING(),
         // validate: {len: [5, 100]},
         allowNull: false
+    },
+    role: {
+        type: DataTypes.ENUM,
+        values: ["user", "admin"],
+        allownull: false,
+        defaultValue: "user"
     }
 })
 

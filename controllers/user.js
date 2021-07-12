@@ -3,20 +3,21 @@ const {UserModel} = require("../models");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { UniqueConstraintError, ValidationError } = require('sequelize');
-const validateJWT = require('../middleware/validateSession');
+const validateRole = require("../middleware/validateAdmin")
 
 
 // ! CREATE A NEW USER
 
 router.post('/register', async (req, res) => {
-    let {firstName, lastName, email, password} = req.body
+    let {firstName, lastName, email, password, role} = req.body
     console.log(req.body)
     try{
         const user = await UserModel.create({
             firstName: firstName,
             lastName: lastName,
             email: email,
-            password: bcrypt.hashSync(password, 13)
+            password: bcrypt.hashSync(password, 13),
+            role: role,
         })
         const token = jwt.sign(
             {id: user.id,},
@@ -54,9 +55,10 @@ router.post('/login', async(req,res) => {
     let { email, password } = req.body;
     try {
         let loginUser = await UserModel.findOne({
-            where: {email: email,}
+            where: {email: email}
         })
         if(loginUser) {
+            console.log("MADE IT");
             let passwordComparison = await bcrypt.compare(password, loginUser.password);
             if(passwordComparison) {
                 let token = jwt.sign(
@@ -88,12 +90,29 @@ router.post('/login', async(req,res) => {
 
 // ! GET ALL USERS
 
-router.get('/', async (req, res) => {
+// router.get('/admin/getall', validateRole, async (req, res) => {
+//     try {
+//         const users = await UserModel.findAll();
+//         res.status(200).json(users);
+//     } catch (err) {
+//         res.status(500).json({error: err})
+//     }
+// })
+
+// ! ADMIN DELETE USER
+
+router.delete('/delete/userId/admin', validateRole, async(req, res) => {
+    const { userId } = req.params
     try {
-        const users = await UserModel.findAll();
-        res.status(200).json(users);
+        const deletedUser = await UserModel.destroy({
+            where: { id: userId }
+        });
+        res.status(200).json({
+            msg: `user deleted`,
+            deletedUser: deletedUser == 0? `none` : deletedUser
+        })
     } catch (err) {
-        res.status(500).json({error: err})
+        res.status(500).json({msg: `Server Error ${err}`})
     }
 })
 
