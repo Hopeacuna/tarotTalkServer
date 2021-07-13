@@ -20,5 +20,13 @@
     "dev": "nodemon"
   },
   "author": "EET",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hopeacuna/tarotTalkServer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Hopeacuna/tarotTalkServer/issues"
+  },
+  "homepage": "https://github.com/Hopeacuna/tarotTalkServer#readme"
 }
