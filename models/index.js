@@ -3,14 +3,12 @@ const UserModel = require('./user');
 const CardModel = require('./card');
 const ReflectionModel = require('./reflection')
 
-ReflectionModel.belongsTo(UserModel);
+// ReflectionModel.belongsTo(UserModel);
 ReflectionModel.hasMany(CardModel);                                                                                                                                                                                                                                                                                                             
 
 module.exports = {
     dbConnection: db,
-    models: {
     UserModel,
     CardModel,
     ReflectionModel
-    }
 };

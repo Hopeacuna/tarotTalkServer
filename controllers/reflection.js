@@ -9,14 +9,13 @@ const router = Express.Router();
 // ! CREATE A REFLECTION
 
 router.post('/create',  validateJWT, async (req, res) => {
-    const {drawnCard, title, reflection, date} = req.body;
-    const {id} = req.user;
+    const {drawnCard, title, reflection, date, user} = req.body;
     const reflectionEntry = {
         drawnCard : drawnCard,
         title: title,
         reflection: reflection,
         date : date,
-        owner_id: id
+        user: user
     }
     try {
         const newReflection = await ReflectionModel.create(reflectionEntry);
@@ -36,8 +35,8 @@ router.get('/:id', validateJWT, async (req, res) => {
     try {
         const userReflection = await ReflectionModel.findAll({
             where: {
-            owner_id: id,
-            completed: false
+            owner_id: id
+            // completed: false
         }
         });
         res.status(200).json(userReflection);

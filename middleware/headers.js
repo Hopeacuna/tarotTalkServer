@@ -1,9 +1,8 @@
-const headers = async (req, res, next) =>  {
-    res.header('Access-Control-Allow-Origin', '*'); //1
-    res.header('access-control-allow-methods', 'GET, POST, PUT, DELETE'); //2
-    res.header('access-control-allow-headers', 'Origin, X-Requested-With, Content-Type, accept, Authorization'); //3
+module.exports = function (req, res, next) {
 
-    next()
-}
+    res.header('access-control-allow-origin', '*');
+    res.header('access-control-allow-methods', 'GET, POST, PUT, DELETE');
+    res.header('access-control-allow-headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
 
-module.exports= headers;
+    next();
+};

@@ -15,6 +15,10 @@ const Journal = db.define("journal", {
     },
     date: {
       type: DataTypes.DATEONLY,
+    },
+    user: {
+      type: DataTypes.STRING,
+      allowNull: false,
     }
   });
   

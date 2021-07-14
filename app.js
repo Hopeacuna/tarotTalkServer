@@ -4,17 +4,17 @@ const app = Express();
 const dbConnection = require("./db");
 
 
-app.use(require("./middleware/headers"));
 
 const controllers = require("./controllers");
 
 app.use(Express.json());
 
+app.use(require("./middleware/headers"));
 app.use("/user", controllers.userController);
 app.use("/card", controllers.cardController);
 app.use("/reflection", controllers.reflectionController);
 
-app.use(require("./middleware/validateSession"))
+// app.use(require("./middleware/validateSession"))
 
 dbConnection.authenticate()
 .then(() => dbConnection.sync())

@@ -64,8 +64,8 @@ router.get('/:id', async (req, res) => {
     try {
         const card = await CardModel.findAll({
             where: {
-            id: cardId,
-            completed: false
+            id: cardId
+            // completed: false
         }
         });
         res.status(200).json(card);
